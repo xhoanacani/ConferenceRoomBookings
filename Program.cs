@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ConferenceRoomBookings.Data;
+using ConferenceRoomBookings.Context;
+
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("ConferenceRoomBookingsContextConnection") ?? throw new InvalidOperationException("Connection string 'ConferenceRoomBookingsContextConnection' not found.");
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultDB") ?? throw new InvalidOperationException("Connection string 'DefaultDB' not found.");
 
 builder.Services.AddDbContext<ConferenceRoomBookingsContext>(options =>
     options.UseSqlServer(connectionString));
