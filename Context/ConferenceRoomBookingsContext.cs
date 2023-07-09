@@ -93,6 +93,7 @@ namespace ConferenceRoomBookings.Context
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.UnavailabilityPeriods)
                     .HasForeignKey(d => d.RoomId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UnavailabilityPeriods_ConferenceRooms");
             });
 

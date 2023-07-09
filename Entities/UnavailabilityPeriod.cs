@@ -8,9 +8,9 @@ namespace ConferenceRoomBookings.Entities
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string? Reasons { get; set; }
-        public int? RoomId { get; set; }
+        public string Reasons { get; set; } = null!;
+        public int RoomId { get; set; }
 
-        public virtual ConferenceRoom? Room { get; set; }
+        public virtual ConferenceRoom Room { get; set; } = null!;
     }
 }
