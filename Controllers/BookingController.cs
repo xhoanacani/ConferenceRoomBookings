@@ -13,6 +13,12 @@ namespace ConferenceRoomBookings.Controllers
 {
     public class BookingController : Controller
     {
+
+        public BookingController(ConferenceRoomBookingsContext context)
+        {
+            _context = context;
+        }
+
         public readonly ConferenceRoomBookingsContext _context;
 
         // GET: ConferenceRoomController

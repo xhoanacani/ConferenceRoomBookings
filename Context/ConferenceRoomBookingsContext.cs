@@ -52,7 +52,7 @@ namespace ConferenceRoomBookings.Context
 
             modelBuilder.Entity<ConferenceRoom>(entity =>
             {
-                entity.Property(e => e.Code).HasDefaultValueSql("(newid())");
+                entity.Property(e => e.CodeRoom);
             });
 
             modelBuilder.Entity<ReservationHolder>(entity =>
