@@ -9,7 +9,9 @@ namespace ConferenceRoomBookings.Context
 {
     public partial class ConferenceRoomBookingsContext : IdentityDbContext
     {
-        public ConferenceRoomBookingsContext()
+		internal readonly object Booking;
+
+		public ConferenceRoomBookingsContext()
         {
         }
 
