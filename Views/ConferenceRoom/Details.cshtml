@@ -1,5 +1,4 @@
-﻿@model ConferenceRoomBookings.Entities.ConferenceRoom
-
+﻿@model ConferenceRoomBookings.Models.ConferenceRoomModel
 @{
     ViewData["Title"] = "Details";
 }
@@ -10,16 +9,16 @@
     <h4>ConferenceRoom</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CodeRoom)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CodeRoom)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.MaximumCapacity)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MaximumCapacity)
         </dd>
     </dl>

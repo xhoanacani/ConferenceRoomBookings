@@ -1,0 +1,50 @@
+﻿@model List<ConferenceRoomBookings.Entities.ReservationHolder>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<p>
+    <a asp-action="Create">Create</a>
+</p>
+
+<h4>ReservationHolder</h4>
+<hr />
+<table class="table">
+        <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SurName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-action="CreateBook" asp-route-id="@item.Id">Book</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
