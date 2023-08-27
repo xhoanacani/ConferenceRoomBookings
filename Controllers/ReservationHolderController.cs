@@ -1,75 +1,156 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using ConferenceRoomBookings.Context;
+﻿using ConferenceRoomBookings.Context;
+using ConferenceRoomBookings.Converters;
 using ConferenceRoomBookings.Entities;
+using ConferenceRoomBookings.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+namespace ConferenceRoomBookings.Controllers;
 
-namespace ConferenceRoomBookings.Controllers
+public class ReservationHolderController : Controller
 {
-    public class ReservationHolderController : Controller
+    public readonly ConferenceRoomBookingsContext _context;
+
+    public ReservationHolderController(ConferenceRoomBookingsContext context)
     {
+        _context = context;
+    }
 
-        public ReservationHolderController(ConferenceRoomBookingsContext context)
+    // GET: ConferenceRoomController
+    public async Task<IActionResult> Index()
+    {
+        var reservationHolders = await _context.ReservationHolders.ToListAsync();
+        var result = reservationHolders.ConvertAll(x => x.ToViewModel());
+        // TODO: Map
+        return View(result);
+    }
+
+    // GET: ConferenceRoomController/Details/5
+    [AllowAnonymous]
+    public async Task<IActionResult> Details(int id)
+    {
+        var reservationHolder = await _context.ReservationHolders.FindAsync(id);
+        if(reservationHolder==null)
         {
-            _context = context;
+            return NotFound();
         }
+        var result = reservationHolder.ToViewModel();
+        // TODO: Map
+        return View(result);
+    }
 
-        public readonly ConferenceRoomBookingsContext _context;
+    // GET: ConferenceRoomController/Create
+    public ActionResult Create()
+    {
+        var viewModel = new ReservationHolderModel();
+        
+        return View(viewModel);
+    }
 
-        // GET: ConferenceRoomController
-        public async Task<IActionResult> Index()
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(ReservationHolderModel request)
+
+    {
+        if(!ModelState.IsValid)
         {
-            var result = await _context.ReservationHolders.ToListAsync();
-
-            return View(result);
-        }
-        // GET: ConferenceRoomController/Details/5
-        public async Task<ReservationHolder> Get(int id)
-        {
-            var reservationHolder = await _context.ReservationHolders.FindAsync(id);
-
-            return reservationHolder;
-        }
-
-        // GET: ConferenceRoomController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ReservationHolder request)
-        {
-            var reservationholderToCreate = new ReservationHolder
-            {
-
-                IdCardNumber = request.IdCardNumber,
-                Name = request.Name,
-                SurName = request.SurName,
-                Email=request.Email,
-                PhoneNumber = request.PhoneNumber,
-                Notes = request.Notes  
-            };
-                _ = _context.ReservationHolders.Add(reservationholderToCreate); 
-            _ = _context.SaveChanges(); 
-            return RedirectToAction(nameof(Index));
-         
             return View(request);
         }
-        // GET: ConferenceRoomController/Delete/5
-        public async void Delete(int id)
+        var existingReservationHolders = await _context.ReservationHolders.FirstOrDefaultAsync(x => x.IdCardNumber == request.IdCardNumber);
+        if (existingReservationHolders != null)
         {
-            var reservationHolder = await _context.ReservationHolders.FindAsync(id);
-
-            _context.ReservationHolders.Remove(reservationHolder);
+            ModelState.AddModelError("IdCardNumber", "A person with this IdCardNumber already exist ");
+        return View(request);
         }
+        var reservationHolders = request.ToEntity();
+        _=_context.ReservationHolders.Add(reservationHolders);
+        _=_context.SaveChanges();
+        return RedirectToAction(nameof(Index));
+        
+    }
+    // GET: ConferenceRoomController/Delete/5
+    public async Task<IActionResult> Delete(int id)
+    {
+        var reservationHolder = await _context.ReservationHolders.FindAsync(id);
+
+        if(reservationHolder==null)
+        {
+            return NotFound();
+        }
+        var result = reservationHolder.ToViewModel();
+        return View(result);
+        
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id,  ReservationHolderModel request)
+    {
+        if (id != request.Id)
+        {
+            return NotFound();
+        }
+
+        var reservationHolder = await _context.ReservationHolders.FindAsync(id);
+
+        if (reservationHolder == null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        _context.ReservationHolders.Remove(reservationHolder);
+
+        _context.SaveChanges();
+
+        return RedirectToAction(nameof(Index));
+    }
+    public async Task<IActionResult> Edit(int id)
+    {
+        var reservationHolder = await _context.ReservationHolders.FindAsync(id);
+
+        if (reservationHolder == null)
+        {
+            return NotFound();
+        }
+
+        var result = reservationHolder.ToViewModel();
+
+        return View(result);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, ReservationHolderModel request)
+    {
+        if (id != request.Id)
+        {
+            return NotFound();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(request);
+        }
+
+        var reservationHolder = await _context.ReservationHolders.FindAsync(id);
+
+        if (reservationHolder == null)
+        {
+            return NotFound();
+        }
+
+        reservationHolder.IdCardNumber = request.IdCardNumber;
+        reservationHolder.Name = request.Name;
+        reservationHolder.SurName= request.SurName;
+        reservationHolder.Email = request.Email;
+        reservationHolder.PhoneNumber = request.PhoneNumber;
+        reservationHolder.Notes = request.Notes;
+        reservationHolder.BookingId = request.BookingId;
+
+        _ = _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
     }
 }
+
 

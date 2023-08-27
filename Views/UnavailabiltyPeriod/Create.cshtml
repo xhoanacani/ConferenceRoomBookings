@@ -1,4 +1,4 @@
-﻿@model ConferenceRoomBookings.Entities.UnavailabilityPeriod
+﻿@model ConferenceRoomBookings.Models.UnavailabilityPeriodModel
 
 @{
     ViewData["Title"] = "Create";
@@ -29,7 +29,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="RoomId" class="control-label"></label>
-                <select asp-for="RoomId" class ="form-control" asp-items="ViewBag.RoomId"></select>
+                <select asp-for="RoomId" asp-items="@(ViewBag.ListRooms)"></select>
+                <span asp-validation-for="RoomId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
