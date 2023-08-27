@@ -13,6 +13,11 @@ namespace ConferenceRoomBookings.Controllers
 {
     public class UnavailabiltyPeriodController : Controller
     {
+        public UnavailabiltyPeriodController(ConferenceRoomBookingsContext context)
+        {
+            _context = context;
+        }
+
         public readonly ConferenceRoomBookingsContext _context;
 
         // GET: ConferenceRoomController

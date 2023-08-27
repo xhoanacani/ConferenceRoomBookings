@@ -13,12 +13,20 @@ namespace ConferenceRoomBookings.Controllers
 {
     public class BookingController : Controller
     {
+
+        public BookingController(ConferenceRoomBookingsContext context)
+        {
+            _context = context;
+        }
+
         public readonly ConferenceRoomBookingsContext _context;
 
         // GET: ConferenceRoomController
-        public async Task<List<Booking>> GetAll()
+        public async Task<IActionResult> Index()
         {
-            return await _context.Bookings.ToListAsync();
+            var result = await _context.Bookings.ToListAsync();
+
+            return View(result);
         }
 
         // GET: ConferenceRoomController/Details/5
@@ -30,11 +38,32 @@ namespace ConferenceRoomBookings.Controllers
         }
 
         // GET: ConferenceRoomController/Create
-        public async void Create(Booking booking)
+        public ActionResult Create()
         {
-            await _context.Bookings.AddAsync(booking);
+            return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Booking request)
+        {
+            var bookingToCreate = new Booking
+            {
+                Code = request.Code,
+                NumberOfPeople  = request.NumberOfPeople,
+                IsConfirmed = request.IsConfirmed,
+                StartDate = request.StartDate,
+                EndDate = request.EndDate,
+                IsDelete = request.IsDelete,
+                RoomId= request.Room.Id
+
+            };
+            _ = _context.Bookings.Add(bookingToCreate);
+            _ = _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+
+            return View(request);
+        }
         // GET: ConferenceRoomController/Delete/5
         public async void Delete(int id)
         {

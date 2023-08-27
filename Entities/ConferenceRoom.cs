@@ -12,7 +12,7 @@ namespace ConferenceRoomBookings.Entities
         }
 
         public int Id { get; set; }
-        public Guid Code { get; set; }
+        public int CodeRoom { get; set; }
         public int MaximumCapacity { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }

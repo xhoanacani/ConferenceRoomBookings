@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using ConferenceRoomBookings.Context;
 using ConferenceRoomBookings.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +14,21 @@ namespace ConferenceRoomBookings.Controllers
 {
     public class ReservationHolderController : Controller
     {
+
+        public ReservationHolderController(ConferenceRoomBookingsContext context)
+        {
+            _context = context;
+        }
+
         public readonly ConferenceRoomBookingsContext _context;
 
         // GET: ConferenceRoomController
-        public async Task<List<ReservationHolder>> GetAll()
+        public async Task<IActionResult> Index()
         {
-            return await _context.ReservationHolders.ToListAsync();
-        }
+            var result = await _context.ReservationHolders.ToListAsync();
 
+            return View(result);
+        }
         // GET: ConferenceRoomController/Details/5
         public async Task<ReservationHolder> Get(int id)
         {
@@ -30,11 +38,31 @@ namespace ConferenceRoomBookings.Controllers
         }
 
         // GET: ConferenceRoomController/Create
-        public async void Create(ReservationHolder reservationHolder)
+        public ActionResult Create()
         {
-            await _context.ReservationHolders.AddAsync(reservationHolder);
+            return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ReservationHolder request)
+        {
+            var reservationholderToCreate = new ReservationHolder
+            {
+
+                IdCardNumber = request.IdCardNumber,
+                Name = request.Name,
+                SurName = request.SurName,
+                Email=request.Email,
+                PhoneNumber = request.PhoneNumber,
+                Notes = request.Notes  
+            };
+                _ = _context.ReservationHolders.Add(reservationholderToCreate); 
+            _ = _context.SaveChanges(); 
+            return RedirectToAction(nameof(Index));
+         
+            return View(request);
+        }
         // GET: ConferenceRoomController/Delete/5
         public async void Delete(int id)
         {
