@@ -10,5 +10,6 @@
 		public int PhoneNumber { get; set; }
 		public string Notes { get; set; } = null!;
 		public int BookingId { get; set; }
+		public Guid? Code { get; set; }
 	}
 }

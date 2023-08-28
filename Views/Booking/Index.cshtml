@@ -1,4 +1,4 @@
-﻿@model List<ConferenceRoomBookings.Entities.Booking>
+﻿@model List<ConferenceRoomBookings.Models.BookingModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -32,7 +32,7 @@
                     @Html.DisplayFor(modelItem => item.IsDelete)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Room.Id)
+                    @Html.DisplayFor(modelItem => item.RoomCode)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
