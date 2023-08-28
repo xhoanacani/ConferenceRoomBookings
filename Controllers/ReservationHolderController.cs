@@ -4,6 +4,7 @@ using ConferenceRoomBookings.Entities;
 using ConferenceRoomBookings.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ConferenceRoomBookings.Controllers;
@@ -20,7 +21,9 @@ public class ReservationHolderController : Controller
     // GET: ConferenceRoomController
     public async Task<IActionResult> Index()
     {
-        var reservationHolders = await _context.ReservationHolders.ToListAsync();
+        var reservationHolders = await _context.ReservationHolders
+            .Include(x=>x.Booking)
+            .ToListAsync();
         var result = reservationHolders.ConvertAll(x => x.ToViewModel());
         // TODO: Map
         return View(result);
@@ -44,7 +47,9 @@ public class ReservationHolderController : Controller
     public ActionResult Create()
     {
         var viewModel = new ReservationHolderModel();
-        
+        var bookings = _context.Bookings.ToList();
+        ViewBag.ListBookings = new SelectList(bookings, "Id", "Code");
+
         return View(viewModel);
     }
 
@@ -61,7 +66,9 @@ public class ReservationHolderController : Controller
         if (existingReservationHolders != null)
         {
             ModelState.AddModelError("IdCardNumber", "A person with this IdCardNumber already exist ");
-        return View(request);
+            var bookings = _context.Bookings.ToList();
+            ViewBag.ListBookings = new SelectList(bookings, "Id", "Code");
+            return View(request);
         }
         var reservationHolders = request.ToEntity();
         _=_context.ReservationHolders.Add(reservationHolders);

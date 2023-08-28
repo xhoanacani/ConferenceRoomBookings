@@ -10,5 +10,7 @@
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
 		public bool IsDelete { get; set; }
-	}
+      
+        public int? RoomCode { get; set; }
+    }
 }
