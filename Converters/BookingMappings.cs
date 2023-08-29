@@ -16,7 +16,8 @@ public static class BookingMappings
             Code = model.Code,
             StartDate = model.StartDate,
             EndDate = model.EndDate,
-            RoomCode = model.Room?.CodeRoom
+            RoomCode = model.Room?.CodeRoom,
+            MaxCapacity=model.Room.MaximumCapacity
         };
     }
 

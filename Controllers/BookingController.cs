@@ -69,6 +69,12 @@ public class BookingController : Controller
             ViewBag.ListRooms = new SelectList(rooms,"Id","CodeRoom");
             return View(request);
         }
+        var numberofpeople= await _context.Bookings.FirstOrDefaultAsync(x=>x.NumberOfPeople< request.MaxCapacity);
+        if(numberofpeople!=null)
+        {
+            return Problem("Number of People can not be more than max capacity");
+
+        }
         var booking = request.ToEntity();
         _ = _context.Bookings.Add(booking);
         _ = _context.SaveChanges();
