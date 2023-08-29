@@ -17,7 +17,7 @@ public static class ReservationHolderMappingscs
            SurName = model.SurName,
            PhoneNumber = model.PhoneNumber,
            Email = model.Email,
-            CodeBooking = model.Booking.Code
+            
         };
     }
 
