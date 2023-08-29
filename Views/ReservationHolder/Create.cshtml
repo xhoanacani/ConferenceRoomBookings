@@ -43,9 +43,9 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Code" class="control-label"></label>
-                 <select asp-for="Code" asp-items="@(ViewBag.ListBookings)"></select>
-                <select asp-for="BookingId" class ="form-control" asp-items="ViewBag.Code"></select>
+                <label asp-for="BookingId" class="control-label"></label>
+                <select asp-for="BookingId" asp-items="@(ViewBag.ListBookings)"></select>
+                <span asp-validation-for="BookingId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
