@@ -1,6 +1,7 @@
 ﻿using ConferenceRoomBookings.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ConferenceRoomBookings.Models;
 
 namespace ConferenceRoomBookings.Context;
 
@@ -100,4 +101,8 @@ public partial class ConferenceRoomBookingsContext : IdentityDbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public DbSet<ConferenceRoomBookings.Models.BookingModel>? BookingModel { get; set; }
+
+    public DbSet<ConferenceRoomBookings.Models.ReservationHolderModel>? ReservationHolderModel { get; set; }
 }

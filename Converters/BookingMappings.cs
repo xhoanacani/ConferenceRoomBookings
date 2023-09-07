@@ -5,6 +5,7 @@ namespace ConferenceRoomBookings.Converters;
 
 public static class BookingMappings
 {
+
     public static BookingModel ToViewModel(this Booking model)
     {
         return new BookingModel
@@ -16,8 +17,7 @@ public static class BookingMappings
             Code = model.Code,
             StartDate = model.StartDate,
             EndDate = model.EndDate,
-            RoomCode = model.Room?.CodeRoom,
-            MaxCapacity=model.Room.MaximumCapacity
+            RoomCode = model.Room?.CodeRoom, 
         };
     }
 
