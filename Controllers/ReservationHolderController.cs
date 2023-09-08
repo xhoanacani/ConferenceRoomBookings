@@ -25,7 +25,6 @@ public class ReservationHolderController : Controller
             .Include(x=>x.Booking)
             .ToListAsync();
         var result = reservationHolders.ConvertAll(x => x.ToViewModel());
-        // TODO: Map
         return View(result);
     }
 
@@ -39,7 +38,6 @@ public class ReservationHolderController : Controller
             return NotFound();
         }
         var result = reservationHolder.ToViewModel();
-        // TODO: Map
         return View(result);
     }
 

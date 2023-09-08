@@ -145,6 +145,5 @@ public class BookingController : Controller
         _ = _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
-
 }
 
