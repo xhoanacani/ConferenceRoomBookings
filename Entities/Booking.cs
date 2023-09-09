@@ -18,6 +18,7 @@ namespace ConferenceRoomBookings.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsDelete { get; set; }
+      
 
         public virtual ConferenceRoom Room { get; set; } = null!;
         public virtual ICollection<ReservationHolder> ReservationHolders { get; set; }

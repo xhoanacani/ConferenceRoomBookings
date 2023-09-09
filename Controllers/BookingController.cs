@@ -35,7 +35,7 @@ public class BookingController : Controller
     }
     // GET: ConferenceRoomController/Details/5
     [AllowAnonymous]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Details(int id)
     {
         var booking = await _context.Bookings.FindAsync(id);
         if (booking == null)
@@ -120,7 +120,7 @@ public class BookingController : Controller
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, BookingModel request)
+    public async Task<IActionResult> Edit(int id, BookingModel request )
     {
         if (id != request.Id)
         {
@@ -142,7 +142,8 @@ public class BookingController : Controller
         booking.IsConfirmed = request.IsConfirmed;
         booking.IsDelete = request.IsDelete;
         booking.RoomId = request.RoomId;
-        _ = _context.SaveChanges();
+       
+        _= _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
 }

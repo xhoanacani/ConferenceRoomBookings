@@ -105,4 +105,6 @@ public partial class ConferenceRoomBookingsContext : IdentityDbContext
     public DbSet<ConferenceRoomBookings.Models.BookingModel>? BookingModel { get; set; }
 
     public DbSet<ConferenceRoomBookings.Models.ReservationHolderModel>? ReservationHolderModel { get; set; }
+
+    public DbSet<ConferenceRoomBookings.Models.UnavailabilityPeriodModel>? UnavailabilityPeriodModel { get; set; }
 }

@@ -17,7 +17,7 @@ public static class BookingMappings
             Code = model.Code,
             StartDate = model.StartDate,
             EndDate = model.EndDate,
-            RoomCode = model.Room?.CodeRoom, 
+            CodeRoom = model.Room?.CodeRoom, 
         };
     }
 
