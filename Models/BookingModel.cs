@@ -11,7 +11,7 @@
 		public DateTime EndDate { get; set; }
 		public bool IsDelete { get; set; }
       
-        public int? RoomCode { get; set; }
+        public int? CodeRoom { get; set; }
         public int? MaxCapacity { get; set; }
     }
 }
